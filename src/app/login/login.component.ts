@@ -14,7 +14,9 @@ export class LoginComponent implements OnInit {
   errorMessage = 'Invalid Credentials'
   invalidLogin = false
 
-  constructor(private router: Router, private hardcodedAuthenticationService: HardcodedAuthenticationService) { }
+  constructor(
+    private router: Router,
+    private hardcodedAuthenticationService: HardcodedAuthenticationService) { }
 
   ngOnInit(): void {
   }
