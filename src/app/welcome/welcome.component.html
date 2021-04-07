@@ -1,4 +1,13 @@
 <h1>Welcome</h1>
 <div class="container">
-  Welcome {{name}}, you can manage your todos <a routerLink="/todos">here</a>
+  Welcome {{username}}, you can manage your todos <a routerLink="/todos">here</a><BR>
+  <button class="btn btn-success" (click)=getWelcomeMessageForUser()>Get Welcome Message</button>
+</div>
+<div class="container" *ngIf=message>
+  <h2>Welcome message from service</h2>
+  {{message}}
+</div>
+<div class="container" *ngIf=errorMessage>
+  <h2>Error message from service</h2>
+  {{errorMessage}}
 </div>
