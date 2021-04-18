@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { TodoDataService } from '../service/data/todo-data.service';
 
 export class Todo {
-  id: number = 0
+  id: number = -1
   description: string = ''
   done: boolean = false
   targetDate: Date = new Date()
@@ -49,5 +49,10 @@ export class ListTodosComponent implements OnInit {
   updateTodo(id: number) {
     console.log(`update todo ${id}`)
     this.router.navigate(['todos', id])
+  }
+
+  addTodo() {
+    console.log("add todo")
+    this.router.navigate(['todos', -1])
   }
 }

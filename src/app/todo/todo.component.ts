@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Todo } from '../list-todos/list-todos.component';
 import { TodoDataService } from '../service/data/todo-data.service';
 
@@ -10,18 +10,42 @@ import { TodoDataService } from '../service/data/todo-data.service';
 })
 export class TodoComponent implements OnInit {
 
-  id: number = 0
+  id: number = -1
   todo: Todo = new Todo()
 
   constructor(
     private service: TodoDataService,
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute,
+    private router: Router) { }
 
   ngOnInit(): void {
-    this.id = this.route.snapshot.params['id']
-    this.service.retrieveTodo('max', this.id).subscribe(
-      response => this.todo = response
-    );
+    this.id = +this.route.snapshot.params['id']
+
+    if (this.id != -1) {
+      this.service.retrieveTodo('max', this.id).subscribe(
+        response => this.todo = response
+      )
+    }
+  }
+
+  saveTodo() {
+    if (this.id === -1) {
+      this.service.createTodo('max', this.todo).subscribe(
+        response => {
+          console.log(response)
+          this.todo = response
+          this.router.navigate(['todos'])
+        }
+      )
+    } else {
+      this.service.updateTodo('max', this.id, this.todo).subscribe(
+        response => {
+          console.log(response)
+          this.todo = response
+          this.router.navigate(['todos'])
+        }
+      )
+    }
   }
 
 }
