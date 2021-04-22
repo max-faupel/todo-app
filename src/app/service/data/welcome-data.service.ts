@@ -19,17 +19,6 @@ export class WelcomeDataService {
   }
 
   getWelcomeMessageForUser(username: string): Observable<WelcomeBean> {
-    let basicAuthHeaderString = this.createBasicAuthenticationHttpHeader()
-    let authHeaders = new HttpHeaders({
-      Authorization: basicAuthHeaderString
-    })
-    return this.httpClient.get<WelcomeBean>(`http://localhost:8080/welcome/${username}`, { headers: authHeaders })
-  }
-
-  createBasicAuthenticationHttpHeader() {
-    let username = 'max'
-    let password = 'dummy'
-    let basicAuthHeaderString = 'Basic ' + window.btoa(username + ':' + password)
-    return basicAuthHeaderString
+    return this.httpClient.get<WelcomeBean>(`http://localhost:8080/welcome/${username}`)
   }
 }
