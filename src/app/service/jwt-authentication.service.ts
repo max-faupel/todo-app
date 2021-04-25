@@ -8,7 +8,7 @@ export const AUTHENTICATED_USER = 'authenticatedUser'
 @Injectable({
   providedIn: 'root'
 })
-export class BasicAuthenticationService {
+export class JwtAuthenticationService {
 
   constructor(private httpClient: HttpClient) { }
 
@@ -34,16 +34,11 @@ export class BasicAuthenticationService {
   }
 
   executeAuthenticationService(username: string, password: string) {
-    let basicAuthHeaderString = 'Basic ' + window.btoa(username + ':' + password)
-    let authHeaders = new HttpHeaders({
-      Authorization: basicAuthHeaderString
-    })
-
-    return this.httpClient.get<AuthenticationBean>(`${API_URL}/basicauth`, { headers: authHeaders }).pipe(
+    return this.httpClient.post<any>(`${API_URL}/authenticate`, { username, password }).pipe(
       map(
         data => {
           sessionStorage.setItem(AUTHENTICATED_USER, username)
-          sessionStorage.setItem(TOKEN, basicAuthHeaderString)
+          sessionStorage.setItem(TOKEN, `Bearer ${data.token}`)
         }
       )
     )
